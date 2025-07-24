@@ -155,9 +155,9 @@ Der Blazor Client (`PatientSolution.Client`) benötigt die Basis-URL Ihrer API.
 ---
 
 ### Screenshots
-
-
-
+![Bild der Patiententabelle](screenshots/patienten_tabelle.png)
+![Bild Filterung nach Nachname](screenshots/patienten_filter_nachname.png)
+![Bild Filterung nach Geburtsdatum](screenshots/patienten_filter_geburtsdatum.png)
 ---
 
 ## Verwandtes Projekt
