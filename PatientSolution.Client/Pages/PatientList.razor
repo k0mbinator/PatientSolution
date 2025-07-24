@@ -1,0 +1,87 @@
+@page "/patients"
+
+@using PatientSolution.Shared.Models
+@using PatientSolution.Client.Services
+@using BlazorBootstrap
+@using BlazorBootstrap.Components
+
+@inject PatientService PatientService
+
+<PageTitle>Patientenübersicht</PageTitle>
+
+<h1>Patienten</h1>
+
+<Grid TItem="Patient"
+      Class="table table-hover table-bordered table-striped"
+      DataProvider="PatientsDataProvider"
+      AllowFiltering="true"
+      AllowPaging="true"
+      PageSize="10"
+      AllowSorting="true"
+      Responsive="true">
+
+    <GridColumns>
+        <GridColumn TItem="Patient" HeaderText="ID" PropertyName="PatientId" SortKeySelector="item => item.PatientId">
+            @context.PatientId
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Nachname" PropertyName="LastName" SortKeySelector="item => item.LastName">
+            @context.LastName
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Vorname" PropertyName="FirstName" SortKeySelector="item => item.FirstName">
+            @context.FirstName
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Geburtsdatum" PropertyName="DateOfBirth" SortKeySelector="item => item.DateOfBirth">
+            @(context.DateOfBirth.HasValue? context.DateOfBirth.Value.ToString("dd.MM.yyyy") : "N/A")
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Geschlecht" PropertyName="Gender" SortKeySelector="item => item.Gender">
+            @context.Gender
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Straße" PropertyName="AddressStreet" SortKeySelector="item => item.AddressStreet">
+            @context.AddressStreet
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="PLZ" PropertyName="AddressZip" SortKeySelector="item => item.AddressZip">
+            @context.AddressZip
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Stadt" PropertyName="AddressCity" SortKeySelector="item => item.AddressCity">
+            @context.AddressCity
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Typ" PropertyName="Hl7MessageType" SortKeySelector="item => item.Hl7MessageType">
+            @context.Hl7MessageType
+        </GridColumn>
+        <GridColumn TItem="Patient" HeaderText="Importdatum" PropertyName="ReceivedDate" SortKeySelector="item => item.ReceivedDate">
+            @(context.ReceivedDate.HasValue? context.ReceivedDate.Value.ToString("dd.MM.yyyy HH:mm") : "N/A")
+        </GridColumn>
+    </GridColumns>
+
+</Grid>
+
+@code {
+    // Diese Variable ist ein optionaler Cache, falls Daten nicht bei jeder Interaktion von der API geholt werden sollen.
+    private IEnumerable<Patient>? patientsCache;
+
+    private async Task<GridDataProviderResult<Patient>> PatientsDataProvider(GridDataProviderRequest<Patient> request)
+    {
+        try
+        {
+            // Holt die Daten vom PatientService bei jedem Aufruf des DataProviders.
+            var allPatients = await PatientService.GetPatientsAsync();
+
+            // Wenn die API null oder keine Daten zurückgibt, behandle dies als leere Liste.
+            if (allPatients == null)
+            {
+                allPatients = new List<Patient>();
+                Console.WriteLine("PatientService.GetPatientsAsync() hat NULL oder keine Daten zurückgegeben.");
+            }
+
+            // Wendet Paging, Sortierung und Filterung basierend auf der Anfrage an.
+            return await Task.FromResult(request.ApplyTo(allPatients));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fehler beim Laden der Patientendaten im DataProvider: {ex.Message}");
+            Console.WriteLine($"Stacktrace: {ex.StackTrace}");
+            // Gibt im Fehlerfall eine leere Liste zurück, um das Grid nicht zu blockieren.
+            return await Task.FromResult(request.ApplyTo(new List<Patient>()));
+        }
+    }
+}

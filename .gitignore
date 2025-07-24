@@ -1,0 +1,82 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.resharper
+*.resharper.user
+*.resharper.host
+*.csproj.user
+*.vbproj.user
+*.dbmdl
+*.jfm
+*.pfx
+*.snk
+*.vssscc
+*.vsscc
+*.vsp
+*.vspscc
+*.tlog
+_UpgradeReport_Files/
+.vc/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Tt]emp/
+*.log
+*.bak
+*.tmp
+*.pdb
+*.exe
+*.dll
+*.mdb
+*.lock.json
+*.nuget.props
+*.nuget.targets
+*.nupkg
+*.cache
+*.trx
+*.vsix
+*.vst
+*.webtest
+*.testsettings
+*.rdc
+*.rptproj.rsuser
+*.rptproj.rsuser.json
+*.rdl.data
+*.rdl.data.json
+
+# NuGet
+packages/
+*.nupkg
+.nuget/NuGetScratch/
+.nuget/packages/
+.nuget/tmp/
+.nuget/build/
+.nuget/solution.cache
+.nuget/packages.config
+.nuget/project.assets.json
+.nuget/NuGet.Config
+.nuget/NuGet.targets
+
+# Rider
+.idea/
+*.iml
+
+# Node.js
+node_modules/
+
+# DotNet tools
+.config/dotnet-tools.json
+
+# Local history for various IDEs
+.history/
+.vscode/
+
+# Custom additions for sensitive data
+**/appsettings.Development.json
+**/appsettings.Local.json

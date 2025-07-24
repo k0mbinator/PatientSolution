@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 namespace PatientSolution.Shared.Models
 {
     public class Patient
@@ -14,6 +12,6 @@ namespace PatientSolution.Shared.Models
         public string? AddressState { get; set; }
         public string? AddressZip { get; set; }
         public string? Hl7MessageType { get; set; }
-        public required DateTime ReceivedDate { get; set; }
+        public DateTime? ReceivedDate { get; set; }
     }
 }

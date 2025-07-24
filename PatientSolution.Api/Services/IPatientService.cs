@@ -1,3 +1,4 @@
+using PatientSolution.Shared.Models;
 
 
 namespace PatientSolution.Api.Services
